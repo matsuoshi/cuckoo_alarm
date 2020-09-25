@@ -5,6 +5,7 @@ function checkAlarm()
 {
   if (new Date().getMinutes() % per_minutes === 0) {
     cuckoo.play()
+    console.log(new Date())
   }
 }
 
