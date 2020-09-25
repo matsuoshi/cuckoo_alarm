@@ -5,13 +5,14 @@ function checkAlarm()
 {
   if (new Date().getMinutes() % per_minutes === 0) {
     cuckoo.play()
-    console.log(new Date())
+    console.log("cuckoo!")
   }
 }
 
 setTimeout(function(){
   checkAlarm()
   chrome.alarms.create("alcuckoo", {"periodInMinutes": 1})
+  console.log("alarm created")
 }, (60 - new Date().getSeconds()) * 1000)
 
 chrome.alarms.onAlarm.addListener(checkAlarm)
