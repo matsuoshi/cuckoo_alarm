@@ -5,7 +5,7 @@
   "manifest_version": 2,
   "permissions": ["alarms"],
   "background": {
-    "scripts": ["alcuckoo.js"]
+    "scripts": ["cuckoo_alarm.js"]
   },
   "browser_action":{
     "default_icon": {
