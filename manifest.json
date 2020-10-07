@@ -1,8 +1,10 @@
 {
-  "name": "cuckoo alarm",
-  "version": "1.0.0",
-  "description": "the Alarm with a cuckoo sounding every 30 minutes",
   "manifest_version": 2,
+  "name": "Cuckoo Alarm",
+  "version": "1.0.1",
+  "description": "the Alarm with a cuckoo sings every 30 minutes",
+  "author": "matsuoshi",
+  "homepage_url": "https://github.com/matsuoshi/cuckoo_alarm",
   "permissions": ["alarms"],
   "background": {
     "scripts": ["cuckoo_alarm.js"]
@@ -11,7 +13,7 @@
     "default_icon": {
       "128": "icons/icon128.png"
     },
-    "default_title": "toggle cuckoo sound"
+    "default_title": "toggle the cuckoo sings"
   },
   "icons": {
     "16": "icons/icon16.png",

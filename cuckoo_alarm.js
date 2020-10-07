@@ -49,5 +49,5 @@ chrome.browserAction.onClicked.addListener(() => {
   let icon = is_disabled ? 'icon_disabled' : 'icon128'
   chrome.browserAction.setIcon({path: `icons/${icon}.png`})
 
-  console.log(is_disabled)
+  console.log({is_disabled})
 })
