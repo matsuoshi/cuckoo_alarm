@@ -13,7 +13,7 @@ const waitingSeconds = 60 - new Date().getSeconds()
 
 setTimeout(() => {
   checkAlarm()
-  chrome.alarms.create("alcuckoo", {"periodInMinutes": 1})
+  chrome.alarms.create("cuckoo_alarm", {"periodInMinutes": 1})
   chrome.alarms.onAlarm.addListener(checkAlarm)
   console.log("alarm created")
 }, waitingSeconds * 1000)
@@ -46,7 +46,7 @@ function checkAlarm()
 chrome.browserAction.onClicked.addListener(() => {
   is_disabled = ! is_disabled
 
-  let icon = is_disabled ? 'icon_disabled' : 'icon128'
+  const icon = is_disabled ? 'icon_disabled' : 'icon128'
   chrome.browserAction.setIcon({path: `icons/${icon}.png`})
 
   console.log({is_disabled})
