@@ -6,37 +6,45 @@ const per_minutes = 30
 let is_disabled = false
 
 
+chrome.alarms.onAlarm.addListener(Cuckoo)
+setNextAlarm()
+
+function setNextAlarm()
+{
+  const now = new Date()
+  const next = new Date()
+  next.setMinutes((Math.floor(now.getMinutes() / per_minutes) + 1) * per_minutes)
+  next.setSeconds(0)
+  next.setMilliseconds(0)
+  console.log(next.toLocaleString())
+
+  if (next - now > 60000) {
+    chrome.alarms.create("cuckoo_alarm", { "when": next.getTime() })
+  }
+  else {
+    // less than 1 minute
+    setTimeout(Cuckoo, next - now)
+  }
+}
+
+
 /*
- * init
- */
-const waitingSeconds = 60 - new Date().getSeconds()
-
-setTimeout(() => {
-  checkAlarm()
-  chrome.alarms.create("cuckoo_alarm", {"periodInMinutes": 1})
-  chrome.alarms.onAlarm.addListener(checkAlarm)
-  console.log("alarm created")
-}, waitingSeconds * 1000)
-
-
-/*
- * alarm
+ * Cuckoo!
  */
 const cuckoo = new Audio(chrome.runtime.getURL("alarm.mp3"))
 
-function checkAlarm()
+function Cuckoo()
 {
-  if (is_disabled) {
-    return false
+  if (new Date().getMinutes() % per_minutes === 0) {
+    console.log("cuckoo!")
+
+    if (!is_disabled) {
+      cuckoo.play()
+    }
   }
 
-  if (new Date().getMinutes() % per_minutes !== 0) {
-    return false
-  }
-
-  cuckoo.play()
-  console.log("cuckoo!")
-  return true
+  updateIcon()
+  setNextAlarm()
 }
 
 
@@ -44,10 +52,11 @@ function checkAlarm()
  * button clicked
  */
 chrome.browserAction.onClicked.addListener(() => {
-  is_disabled = ! is_disabled
-
-  const icon = is_disabled ? 'icon_disabled' : 'icon128'
-  chrome.browserAction.setIcon({path: `icons/${icon}.png`})
-
-  console.log({is_disabled})
+  is_disabled = !is_disabled
+  updateIcon()
 })
+
+function updateIcon() {
+  const icon = is_disabled ? 'icon_disabled' : 'icon128'
+  chrome.browserAction.setIcon({ path: `icons/${icon}.png` })
+}
