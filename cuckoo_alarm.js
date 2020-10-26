@@ -6,24 +6,23 @@ const per_minutes = 30
 let is_disabled = false
 
 
-chrome.alarms.onAlarm.addListener(Cuckoo)
+chrome.alarms.onAlarm.addListener(checkAlarm)
 setNextAlarm()
 
 function setNextAlarm()
 {
   const now = new Date()
   const next = new Date()
-  next.setMinutes((Math.floor(now.getMinutes() / per_minutes) + 1) * per_minutes)
+  next.setMinutes(Math.floor(now.getMinutes() / 2) * 2 + 2)
   next.setSeconds(0)
   next.setMilliseconds(0)
-  console.log(next.toLocaleString())
 
   if (next - now > 60000) {
     chrome.alarms.create("cuckoo_alarm", { "when": next.getTime() })
   }
   else {
     // less than 1 minute
-    setTimeout(Cuckoo, next - now)
+    setTimeout(checkAlarm, next - now)
   }
 }
 
@@ -33,7 +32,7 @@ function setNextAlarm()
  */
 const cuckoo = new Audio(chrome.runtime.getURL("alarm.mp3"))
 
-function Cuckoo()
+function checkAlarm()
 {
   if (new Date().getMinutes() % per_minutes === 0) {
     console.log("cuckoo!")

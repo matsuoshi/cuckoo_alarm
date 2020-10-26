@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Cuckoo Alarm",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "the Alarm with a cuckoo sings every 30 minutes",
   "author": "matsuoshi",
   "homepage_url": "https://github.com/matsuoshi/cuckoo_alarm",
